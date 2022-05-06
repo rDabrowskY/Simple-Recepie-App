@@ -1,0 +1,59 @@
+.resultsSection{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  flex-direction: column;
+  margin-bottom: 2.5rem;
+  &__amount{
+    font-size: .75rem;
+    color: $fadedBlack;
+  }
+  &__confirmation{
+    font-size: 1.25rem;
+    font-weight: bold;
+    text-align: center;
+  }
+  &__content{
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow-y: scroll;
+    &::-webkit-scrollbar{
+      display: none;
+    }
+    .recepie{
+      display: flex;
+      position: relative;
+      background-color: $secoundaryBgColor;
+      padding: .5rem;
+      border-radius: 10px;
+      gap: .75rem;
+      &__img{
+        height: 121px;
+        aspect-ratio: 1 / 1;
+        border-radius: inherit;
+      }
+      &__text{
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+       
+        .recepie__name{
+          justify-self: start;
+          font-size: 14px;
+        }
+        .recepie__info{
+          font-size: 12px;
+        }
+      }
+      &__btn{
+        position: absolute;
+        right: .5rem;
+        bottom: .5rem;
+      }
+    }
+  }
+  
+}

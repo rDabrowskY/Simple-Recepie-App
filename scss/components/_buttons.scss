@@ -1,0 +1,24 @@
+.icon-btn{
+  outline: none;
+  border: none;
+  display: grid;
+  place-items: center;
+  background-color: transparent;
+  font-size: 1.45rem;
+}
+.primary-btn{
+  outline: none;
+  border: none;
+  background-color: $primaryBtnColor;
+  color: $fontWhite;
+  padding: 5px 10px;
+  border-radius: 10px;
+  border: 2px solid $primaryBtnColor;
+  transition: .1s all ease-in;
+  &:hover{
+    background-color:$fontWhite;
+    color: $primaryBtnColor;
+    border: 2px solid $primaryBtnColor;
+    cursor: pointer;
+  }
+}

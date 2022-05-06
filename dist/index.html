@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Recepie App</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+  <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
+  <link rel="stylesheet" href="./css/style.min.css">
+</head>
+<body>
+  <main>
+    <header id="appHeader" class="appHeader">
+      <button id="appHeader__profile" class="appHeader__btn icon-btn">
+        <span class="iconify" data-icon="akar-icons:person"></span>
+      </button>
+      <h1 class="appHeader__title">Simple Recipe App</h1>
+      <button id="appHeader__settings" class="appHeader__btn icon-btn">
+        <span class="iconify" data-icon="octicon:gear-24"></span>
+      </button>
+    </header>
+    <nav id="navSection" class="navSection">
+      <div class="formContainer">
+        <form class="formContainer__form" class="formSection__form">
+          <input type="text" id="formContainer__text" class="formContainer__text" placeholder="Search for recepie" title="Search For Recepie" autocomplete="off">
+          <button type="submit" id="formContainer__button" class="formContainer__button icon-btn">
+            <span class="iconify" data-icon="mdi:magnify"></span>
+          </button>
+        </form>
+      </div> 
+      <div class="categoriesContainer">
+        <ul class="categoriesContainer__list">
+          <li class="listItem">
+            <button id="" class="categoryContainer__button icon-btn">
+              <span class="iconify" data-icon="bx:category"></span>
+            </button>
+          </li>
+          <li class="listItem">
+            <button id="" class="categoryContainer__button icon-btn">
+              <span class="iconify" data-icon="gis:world-map"></span>
+            </button>
+          </li>
+          <li class="listItem">
+            <button id="" class="categoryContainer__button icon-btn">
+              <span class="iconify" data-icon="fa6-solid:arrow-down-a-z"></span>
+            </button>
+          </li>
+          <li class="listItem">
+            <button id="" class="categoryContainer__button icon-btn">
+              <span class="iconify" data-icon="fad:random-1dice"></span>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <section id="resultsSection" class="resultsSection">
+      <p class="resultsSection__amount">Results: 1231</p>
+      <p class="resultsSection__confirmation none">No results</p>
+      <div id="resultsSection__content" class="resultsSection__content">
+        <div class="recepie">
+          <img class="recepie__img" src="https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg" alt="">
+          <div class="recepie__text">
+            <h2 class="recepie__name">Spicy Arrabiata Penne</h2>
+            <p class="recepie__info">Vegetarian</p>
+            <p class="recepie__info">Italian</p>
+            <p class="recepie__info">Pasta, Curry</p>
+          </div>
+          <button class="recepie__btn primary-btn">Let's cook!</button>
+        </div>
+        <div class="recepie">
+          <img class="recepie__img" src="https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg" alt="">
+          <div class="recepie__text">
+            <h2 class="recepie__name">Spicy Arrabiata Penne</h2>
+            <p class="recepie__info">Vegetarian</p>
+            <p class="recepie__info">Italian</p>
+            <p class="recepie__info">Pasta, Curry</p>
+          </div>
+          <button class="recepie__btn primary-btn">Let's cook!</button>
+        </div>
+        <div class="recepie">
+          <img class="recepie__img" src="https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg" alt="">
+          <div class="recepie__text">
+            <h2 class="recepie__name">Spicy Arrabiata Penne</h2>
+            <p class="recepie__info">Vegetarian</p>
+            <p class="recepie__info">Italian</p>
+            <p class="recepie__info">Pasta, Curry</p>
+          </div>
+          <button class="recepie__btn primary-btn">Let's cook!</button>
+        </div>
+        <div class="recepie">
+          <img class="recepie__img" src="https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg" alt="">
+          <div class="recepie__text">
+            <h2 class="recepie__name">Spicy Arrabiata Penne</h2>
+            <p class="recepie__info">Vegetarian</p>
+            <p class="recepie__info">Italian</p>
+            <p class="recepie__info">Pasta, Curry</p>
+          </div>
+          <button class="recepie__btn primary-btn">Let's cook!</button>
+        </div>
+        <div class="recepie">
+          <img class="recepie__img" src="https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg" alt="">
+          <div class="recepie__text">
+            <h2 class="recepie__name">Spicy Arrabiata Penne</h2>
+            <p class="recepie__info">Vegetarian</p>
+            <p class="recepie__info">Italian</p>
+            <p class="recepie__info">Pasta, Curry</p>
+          </div>
+          <button class="recepie__btn primary-btn">Let's cook!</button>
+        </div>
+        <div class="recepie">
+          <img class="recepie__img" src="https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg" alt="">
+          <div class="recepie__text">
+            <h2 class="recepie__name">Spicy Arrabiata Penne</h2>
+            <p class="recepie__info">Vegetarian</p>
+            <p class="recepie__info">Italian</p>
+            <p class="recepie__info">Pasta, Curry</p>
+          </div>
+          <button class="recepie__btn primary-btn">Let's cook!</button>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

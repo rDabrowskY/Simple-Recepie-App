@@ -1,0 +1,52 @@
+.navSection{
+  width: 100%;
+  margin: .65rem 0;
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  .formContainer{
+    &__form{
+      display: flex;
+      border-radius: 3rem;
+      box-shadow: 0 4px 15px rgba(0 0 0 / .15);
+      .formContainer__text{
+        outline: none;
+        border: none;
+        font-size: 1.1rem;
+        padding: .5rem 0 .5rem .75rem;
+        flex-grow: 1;
+        background-color: $secoundaryBgColor;
+        border-radius: 3rem 0 0 3rem;
+  
+      }
+      .formContainer__button{
+        background-color: $secoundaryBgColor;
+        padding-right: .25rem;
+        border-radius: 0 3rem 3rem 0;
+        
+        &:hover{
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  .categoriesContainer{
+    margin-top: 1rem; 
+    
+    &__list{
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+      margin: 0 auto;
+      padding: .75rem 0;
+      max-width: 250px;
+      list-style: none;
+      border-radius: .5rem;
+      background-color: $secoundaryBgColor;
+      box-shadow: 0 4px 15px rgba(0 0 0 / .15);
+      .categoryContainer__button{
+        cursor: pointer;
+      }
+    }
+  }
+}

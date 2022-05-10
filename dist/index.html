@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
   <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
   <link rel="stylesheet" href="./css/style.min.css">
-  <script src="./js/main.js" type="module"></script>
+
 </head>
 <body>
   <main>
@@ -26,99 +26,87 @@
       <div class="formContainer">
         <form class="formContainer__form" class="formSection__form">
           <input type="text" id="formContainer__text" class="formContainer__text" placeholder="Search for recepie" title="Search For Recepie" autocomplete="off">
-          <button type="submit" id="formContainer__button" class="formContainer__button icon-btn">
+          <li id="formContainer__button" class="formContainer__button icon-btn">
             <span class="iconify" data-icon="mdi:magnify"></span>
-          </button>
+          </li>
         </form>
       </div> 
       <div class="categoriesContainer">
-        <div class="categoriesContainer__list">
-          <button id="categoriesBtn" data-category="categories" class="categoryContainer__button icon-btn">
-              <span class="iconify" data-icon="bx:category"></span>
-            </button>
-            <button id="areaBtn" data-btn-category="area" class="categoryContainer__button icon-btn">
-              <span class="iconify" data-icon="gis:world-map"></span>
-            </button>    
-            <button id="likedBtn" data-btn-category="liked" class="categoryContainer__button icon-btn">
-              <span class="iconify" data-icon="fa6-solid:heart"></span>
-            </button>
-            <button id="randomBtn" data-btn-category="random" class="categoryContainer__button icon-btn">
-              <span class="iconify" data-icon="fad:random-1dice"></span>
-            </button>
-        </div>
-        <div class="categoriesContainer__sublist">
-            <form class="sublist__form" id="sublist__category">
-              <label for="categorySelect">Choose by Category</label>
-              <select class="categoriesContainer__select" name="categorySelect" id="">
-                <option value="Beef">Beef</option>
-                <option value="Breakfast">Breakfast</option>
-                <option value="Chicken">Chicken</option>
-                <option value="Dessert">Dessert</option>
-                <option value="Goat">Goat</option>
-                <option value="Lamb">Lamb</option>
-                <option value="Miscellaneous">Miscellaneoussa</option>
-                <option value="Pasta">Pasta</option>
-                <option value="Pork">Pork</option>
-                <option value="Seafood">Seafood</option>
-                <option value="Side">Side</option>
-                <option value="Starter">Starter</option>
-                <option value="Vegan">Vegan</option>
-                <option value="Vegetarian">Vegetarian</option>
-              </select>
-              <button type="submit" class="sublist__btn primary-btn"><span class="iconify" data-icon="akar-icons:check"></span></button>
-            </form>
-            <form class="sublist__form sublist__form--none" id="sublist__area">
-              <label for="areaSelect">Choose by Area</label>
-              <select class="categoriesContainer__select" name="areaSelect" id="">
-                <option value="American">American</option>
-                <option value="British">British</option>
-                <option value="Canadian">Canadian</option>
-                <option value="Chinese">Chinese</option>
-                <option value="Croatian">Croatian</option>
-                <option value="Dutch">Dutch</option>
-                <option value="Egyptian">Egyptian</option>
-                <option value="French">French</option>
-                <option value="Greek">Greek</option>
-                <option value="Indian">Indian</option>
-                <option value="Irish">Irish</option>
-                <option value="Italian">Italian</option>
-                <option value="Jamaican">Jamaican</option>
-                <option value="Japanese">Japanese</option>
-                <option value="Kenyan">Kenyan</option>
-                <option value="Malaysian">Malaysian</option>
-                <option value="Mexican">Mexican</option>
-                <option value="Moroccan">Moroccan</option>
-                <option value="Polish">Polish</option>
-                <option value="Portuguese">Portuguese</option>
-                <option value="Russian">Russian</option>
-                <option value="Spanish">Spanish</option>
-                <option value="Thai">Thai</option>
-                <option value="Tunisian">Tunisian</option>
-                <option value="Turkish">Turkish</option>
-                <option value="Vietnamese">Vietnamese</option>
-                <option value="Unknown">Unknown</option>
-              </select>
-              <button type="submit" class="sublist__btn primary-btn"><span class="iconify" data-icon="akar-icons:check"></span></button>
-            </form>
-        </div>
+        <ul class="categoriesContainer__list">
+            <li class="has-submenu">
+              <button id="categoriesBtn" data-category="categories" class="categoryContainer__button icon-btn">
+                <span class="iconify" data-icon="bx:category"></span>
+              </button>
+              <div id="categorySubmenu__type" class="categorySubmenu">
+                <!-- <div>Beef</div>
+                <div>Breakfast</div>
+                <div>Chicken</div>
+                <div>Dessert</div>
+                <div>Goat</div>
+                <div>Lamb</div>
+                <div>Miscellaneous</div>
+                <div>Pasta</div>
+                <div>Pork</div>
+                <div>Seafood</div>
+                <div>Side</div>
+                <div>Starter</div>
+                <div>Vegan</div>
+                <div>Vegetarian</div> -->
+              </div>
+            </li> 
+            <li class="has-submenu">
+              <button id="areaBtn" class="categoryContainer__button icon-btn">
+                <span class="iconify" data-icon="gis:world-map"></span>
+              </button>
+              <div id="categorySubmenu__area" class="categorySubmenu">
+                <!-- <div>British</div>
+                <div>American</div>
+                <div>Canadian</div>
+                <div>Chinese</div>
+                <div>Croatian</div>
+                <div>Egyptian</div>
+                <div>Dutch</div>
+                <div>French</div>
+                <div>Indian</div>
+                <div>Greek</div>
+                <div>Irish</div>
+                <div>Itabuttonan</div>
+                <div>Jamaican</div>
+                <div>Japanese</div>
+                <div>Kenyan</div>
+                <div>Malaysian</div>
+                <div>Mexican</div>
+                <div>Moroccan</div>
+                <div>Pobuttonsh</div>
+                <div>Russian</div>
+                <div>Portuguese</div>
+                <div>Spanish</div>
+                <div>Thai</div>
+                <div>Tunisian</div>
+                <div>Turkish</div>
+                <div>Vietnamese</div>
+                <div>Unknown</div> -->
+              </div>   
+            </li>
+            <li> 
+              <button id="likedBtn" data-btn-category="liked" class="categoryContainer__button icon-btn">
+                <span class="iconify" data-icon="fa6-solid:heart"></span>
+              </button>
+            </li>
+            <li>
+              <button id="randomBtn" data-btn-category="random" class="categoryContainer__button icon-btn">
+                <span class="iconify" data-icon="fad:random-1dice"></span>
+              </button>
+            </li>
+        </ul>
       </div>
     </nav>
     <section id="resultsSection" class="resultsSection">
-      <p class="resultsSection__amount">Results: 1231</p>
+      <p class="resultsSection__amount"></p>
       <p class="resultsSection__confirmation none">No results</p>
-      <div id="resultsSection__content" class="resultsSection__content">
-        <div class="recepie">
-          <img class="recepie__img" src="https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg" alt="">
-          <div class="recepie__text">
-            <h2 class="recepie__name">Spicy Arrabiata Penne</h2>
-            <p class="recepie__info">Vegetarian</p>
-            <p class="recepie__info">Italian</p>
-            <p class="recepie__info">Pasta, Curry</p>
-          </div>
-          <button class="recepie__btn primary-btn">Let's cook!</button>
-        </div>
-      </div>
+      <div id="resultsSection__content" class="resultsSection__content"></div>
     </section>
   </main>
+  <script src="./js/main.js" type="text/javascript"></script>
 </body>
 </html>

@@ -17,9 +17,12 @@
   &__content{
     margin-top: 1rem;
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 1rem;
     overflow-y: scroll;
+    
+    width: 100%;
     &::-webkit-scrollbar{
       display: none;
     }
@@ -29,7 +32,11 @@
       background-color: $secoundaryBgColor;
       padding: .5rem;
       border-radius: 10px;
-      gap: .75rem;
+      gap: .75rem;width: 100%;
+      
+      @include mq(375px){
+        width: min(18rem, 100%);
+      }
       &__img{
         height: 121px;
         aspect-ratio: 1 / 1;

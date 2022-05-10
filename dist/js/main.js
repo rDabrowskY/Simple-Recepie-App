@@ -1,6 +1,5 @@
 let API = "https://www.themealdb.com/api/json/v1/1/";
 
-
 const appInit = () => {
   setApp();
   const likedRecepies = document.querySelector("#likedBtn");
@@ -21,7 +20,6 @@ const setApp = () => {
 
   setCategories(typeSubcategoryCon, "list.php?c=list");
   setCategories(areaSubcategoryCon, "list.php?a=list");
-  // setAreaCategories(areaSubcategoryCon)
 };
 const setCategories = async (container, target) => {
   try {
@@ -90,9 +88,10 @@ const displayRecepies = async (url, conteiner) => {
 
 const showFullRecepie = (e) => {
   const recepieID = e.path[1].getAttribute("data-recepie-id");
-  const fullRecepie = document.querySelector('#fullRecepieSection')
-  const recepieData = await getFullRecepie(recepieID)
-  fullRecepie.scrollIntoView()
+  const fullRecepie = document.querySelector("#fullRecepieSection");
+  getFullRecepie(recepieID);
+
+  fullRecepie.scrollIntoView();
 };
 
 const displayError = (msg) => {
@@ -100,10 +99,93 @@ const displayError = (msg) => {
   confirmation.textContent = msg;
 };
 
-const getFullRecepie = async (id) =>{
-  let recepieData = {}
-  try{
-
+const getFullRecepie = async (id) => {
+  try {
+    const resp = await fetch(`${API}lookup.php?i=${id}`);
+    const data = await resp.json();
+    const meal = data.meals[0];
+    const formatedObj = createRecepieObj(meal);
+    createRecepie(formatedObj);
+  } catch (err) {
+    console.error(err);
   }
-}
+};
+const createRecepieObj = (obj) => {
+  let recepieObj = {
+    name: obj.strMeal,
+    category: obj.strCategory,
+    area: obj.strArea,
+    tag: obj.strTags ? obj.strTags : "",
+    image: obj.strMealThumb,
+    instruction: obj.strInstructions,
+    ingredient: [],
+    measure: [],
+  };
+
+  let regexpIngredient = /strIngredient/;
+  let regexpMeasure = /strMeasure/;
+
+  for (let key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      if (regexpMeasure.test(key)) {
+        recepieObj.measure.push(obj[key]);
+        if (obj[key] === "" || obj[key] === " ") {
+          recepieObj.measure.pop(obj[key]);
+          break;
+        }
+      }
+    }
+  }
+  for (let key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      if (regexpIngredient.test(key)) {
+        recepieObj.ingredient.push(obj[key]);
+        if (obj[key] === "" || obj[key] === " ") {
+          recepieObj.ingredient.pop(obj[key]);
+          break;
+        }
+      }
+    }
+  }
+  return recepieObj;
+};
+const createRecepie = (obj) => {
+  const recepieContainer = document.querySelector(
+    "#fullRecepieSection__content"
+  );
+  console.log(obj);
+  recepieContainer.innerHTML = "";
+  let recepie = `
+    <img class="recepie__image" src=${obj.image} alt=${obj.name}>
+    <h2 class="recepie__title">${obj.name}</h2>
+    <div class="recepie__tags">
+      <p class="info">${obj.category}</p>
+      <p class="info">${obj.area}</p>
+      <p class="info">${obj.tag}</p>
+    </div>
+    <div class="recepie__ingredients">
+      <h3 class="title">Ingredients</h3>
+        ${createIngredientsList(obj.ingredient, obj.measure)}
+    </div>
+    <div class="recepie__description">
+      <h3 class="title">Instruction</h3>
+      <p class="description">${obj.instruction}</p>
+    </div>
+    <p class="enjoy">Enjoy!</p>`;
+  recepieContainer.innerHTML += recepie;
+  console.log(recepieContainer);
+};
+const createIngredientsList = (objIng, objMeas) => {
+  const list = document.createElement("ul");
+  list.classList.add("ingredients__list");
+  for (let i = 0; i < objIng.length; i++) {
+    let item = `
+    <li class="ingredient">
+      <span class="name">${objIng[i]}</span>
+      <span class="measure">${objMeas[i]}</span>
+    </li>`;
+    list.innerHTML += item;
+  }
+  return list.outerHTML;
+};
 document.addEventListener("DOMContentLoaded", appInit);

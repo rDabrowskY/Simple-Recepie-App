@@ -15,7 +15,11 @@ body{
   width: 100%;
   padding: 2rem;
   background-color: $mainBgColor;
-  overflow: hidden;
+  overflow-x: hidden;
+  position: relative;
+  &::-webkit-scrollbar{
+    display: none;
+  }
 }
 ul{
   list-style: none;

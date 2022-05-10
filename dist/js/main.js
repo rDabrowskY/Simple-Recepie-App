@@ -1,11 +1,19 @@
 let API = "https://www.themealdb.com/api/json/v1/1/";
-// recepie__text
-//  // <p class="recepie__info">Vegetarian</p>
-// <p class="recepie__info">Italian</p>
-// <p class="recepie__info">Pasta, Curry</p>
-//
+
+
 const appInit = () => {
   setApp();
+  const likedRecepies = document.querySelector("#likedBtn");
+  likedRecepies.addEventListener("click", () => {
+    const fullRecepiePage = document.querySelector("#fullRecepieSection");
+    fullRecepiePage.scrollIntoView();
+  });
+  const backBtn = document
+    .querySelector("#back")
+    .addEventListener("click", () => {
+      const main = document.querySelector("body");
+      main.scrollIntoView();
+    });
 };
 const setApp = () => {
   const typeSubcategoryCon = document.querySelector("#categorySubmenu__type");
@@ -37,6 +45,7 @@ const setCategories = async (container, target) => {
     }
     console.log(data);
   } catch (err) {
+    displayError(err);
     console.log(err);
   }
 };
@@ -59,9 +68,10 @@ const displayRecepies = async (url, conteiner) => {
     const res = await fetch(url);
     const data = await res.json();
     const meals = data.meals;
+    console.log(meals);
     for (let i = 0; i < meals.length; i++) {
       let recepie = `
-      <div class="recepie">
+      <div class="recepie" data-recepie-id="${meals[i].idMeal}">
         <img class="recepie__img" src=${meals[i].strMealThumb} alt=${meals[i].strMeal}>
         <div class="recepie__text">
           <h2 class="recepie__name">${meals[i].strMeal}</h2>
@@ -74,5 +84,26 @@ const displayRecepies = async (url, conteiner) => {
   } catch (err) {
     console.log(err);
   }
+  const recepieBtn = document.querySelectorAll(".recepie__btn");
+  recepieBtn.forEach((btn) => btn.addEventListener("click", showFullRecepie));
 };
+
+const showFullRecepie = (e) => {
+  const recepieID = e.path[1].getAttribute("data-recepie-id");
+  const fullRecepie = document.querySelector('#fullRecepieSection')
+  const recepieData = await getFullRecepie(recepieID)
+  fullRecepie.scrollIntoView()
+};
+
+const displayError = (msg) => {
+  const confirmation = document.querySelector(".esultsSection__confirmation");
+  confirmation.textContent = msg;
+};
+
+const getFullRecepie = async (id) =>{
+  let recepieData = {}
+  try{
+
+  }
+}
 document.addEventListener("DOMContentLoaded", appInit);

@@ -37,56 +37,13 @@
               <button id="categoriesBtn" data-category="categories" class="categoryContainer__button icon-btn">
                 <span class="iconify" data-icon="bx:category"></span>
               </button>
-              <div id="categorySubmenu__type" class="categorySubmenu">
-                <!-- <div>Beef</div>
-                <div>Breakfast</div>
-                <div>Chicken</div>
-                <div>Dessert</div>
-                <div>Goat</div>
-                <div>Lamb</div>
-                <div>Miscellaneous</div>
-                <div>Pasta</div>
-                <div>Pork</div>
-                <div>Seafood</div>
-                <div>Side</div>
-                <div>Starter</div>
-                <div>Vegan</div>
-                <div>Vegetarian</div> -->
-              </div>
+              <div id="categorySubmenu__type" class="categorySubmenu"></div>
             </li> 
             <li class="has-submenu">
               <button id="areaBtn" class="categoryContainer__button icon-btn">
                 <span class="iconify" data-icon="gis:world-map"></span>
               </button>
-              <div id="categorySubmenu__area" class="categorySubmenu">
-                <!-- <div>British</div>
-                <div>American</div>
-                <div>Canadian</div>
-                <div>Chinese</div>
-                <div>Croatian</div>
-                <div>Egyptian</div>
-                <div>Dutch</div>
-                <div>French</div>
-                <div>Indian</div>
-                <div>Greek</div>
-                <div>Irish</div>
-                <div>Itabuttonan</div>
-                <div>Jamaican</div>
-                <div>Japanese</div>
-                <div>Kenyan</div>
-                <div>Malaysian</div>
-                <div>Mexican</div>
-                <div>Moroccan</div>
-                <div>Pobuttonsh</div>
-                <div>Russian</div>
-                <div>Portuguese</div>
-                <div>Spanish</div>
-                <div>Thai</div>
-                <div>Tunisian</div>
-                <div>Turkish</div>
-                <div>Vietnamese</div>
-                <div>Unknown</div> -->
-              </div>   
+              <div id="categorySubmenu__area" class="categorySubmenu"></div>   
             </li>
             <li> 
               <button id="likedBtn" data-btn-category="liked" class="categoryContainer__button icon-btn">
@@ -103,10 +60,70 @@
     </nav>
     <section id="resultsSection" class="resultsSection">
       <p class="resultsSection__amount"></p>
-      <p class="resultsSection__confirmation none">No results</p>
+      <p class="resultsSection__confirmation"></p>
       <div id="resultsSection__content" class="resultsSection__content"></div>
     </section>
   </main>
+  <section id="fullRecepieSection" class="fullRecepieSection">
+    <header class="fullRecepieSection__header">
+      <button id="back" class="icon-btn">
+        <span class="iconify" data-icon="akar-icons:arrow-left"></span>
+      </button>
+      <button id="likeRecepie" class="icon-btn">
+        <span class="iconify" data-icon="bi:heart"></span>
+      </button>
+    </header>
+    <div id="fullRecepieSection__content" class="fullRecepieSection__content">
+      <img class="recepie__image" src="https://www.themealdb.com/images/media/meals/ursuup1487348423.jpg" style="
+        height: 200px;" alt="">
+      <h2 class="recepie__title">Spicy Arrabiata Penne</h2>
+      <div class="recepie__tags">
+        <p class="info">Vegetarian</p>
+        <p class="info">Italian</p>
+        <p class="info">Pasta, Curry</p>
+      </div>
+      <div class="recepie__ingredients">
+        <h3 class="title">Ingredients</h3>
+        <ul class="ingredients__list">
+          <li class="ingredient">
+            <span class="name">penne rigather</span>
+            <span class="measure">1 pound</span>
+          </li>
+          <li class="ingredient">
+            <span class="name">penne rigather</span>
+            <span class="measure">1 pound</span>
+          </li>
+          <li class="ingredient">
+            <span class="name">penne rigather</span>
+            <span class="measure">1 pound</span>
+          </li>
+          <li class="ingredient">
+            <span class="name">penne rigather</span>
+            <span class="measure">1 pound</span>
+          </li>
+          <li class="ingredient">
+            <span class="name">penne rigather</span>
+            <span class="measure">1 pound</span>
+          </li>
+          <li class="ingredient">
+            <span class="name">penne rigather</span>
+            <span class="measure">1 pound</span>
+          </li>
+          <li class="ingredient">
+            <span class="name">penne rigather</span>
+            <span class="measure">1 pound</span>
+          </li>
+        </ul>
+      </div>
+      <div class="recepie__description">
+        <h3 class="title">Instruction</h3>
+        <p class="description">Bring a large pot of water to a boil. Add kosher salt to the boiling water, then add the pasta. Cook according to the package instructions, about 9 minutes.
+          In a large skillet over medium-high heat, add the olive oil and heat until the oil starts to shimmer. Add the garlic and cook, stirring, until fragrant, 1 to 2 minutes. Add the chopped tomatoes, red chile flakes, Italian seasoning and salt and pepper to taste. Bring to a boil and cook for 5 minutes. Remove from the heat and add the chopped basil.
+          Drain the pasta and add it to the sauce. Garnish with Parmigiano-Reggiano flakes and more basil and serve warm.</p>
+      </div>
+      <p class="enjoy">Enjoy!</p>
+    </div>
+  </section>
   <script src="./js/main.js" type="text/javascript"></script>
 </body>
 </html>

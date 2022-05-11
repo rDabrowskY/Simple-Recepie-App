@@ -15,7 +15,7 @@ body{
   width: 100%;
   padding: 2rem;
   background-color: $mainBgColor;
-  overflow-x: hidden;
+  // overflow: hidden;
   position: relative;
   &::-webkit-scrollbar{
     display: none;
@@ -36,4 +36,7 @@ main{
 }
 .none{
   display: none;
+}
+.no-scroll{
+  overflow: hidden;
 }

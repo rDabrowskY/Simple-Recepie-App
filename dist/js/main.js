@@ -1,5 +1,6 @@
 let API = "https://www.themealdb.com/api/json/v1/1/";
-
+const body = document.querySelector("body");
+const recepieContainer = document.querySelector("#fullRecepieSection__content");
 const appInit = () => {
   setApp();
   const likedRecepies = document.querySelector("#likedBtn");
@@ -7,19 +8,18 @@ const appInit = () => {
     const fullRecepiePage = document.querySelector("#fullRecepieSection");
     fullRecepiePage.scrollIntoView();
   });
-  const backBtn = document
-    .querySelector("#back")
-    .addEventListener("click", () => {
-      const main = document.querySelector("body");
-      main.scrollIntoView();
-    });
+  const backBtn = document.querySelector("#back");
+  backBtn.addEventListener("click", () => {
+    body.classList.add("no-scroll");
+    body.scrollIntoView();
+  });
 };
 const setApp = () => {
   const typeSubcategoryCon = document.querySelector("#categorySubmenu__type");
   const areaSubcategoryCon = document.querySelector("#categorySubmenu__area");
-
   setCategories(typeSubcategoryCon, "list.php?c=list");
   setCategories(areaSubcategoryCon, "list.php?a=list");
+  body.classList.add("no-scroll");
 };
 const setCategories = async (container, target) => {
   try {
@@ -90,12 +90,12 @@ const showFullRecepie = (e) => {
   const recepieID = e.path[1].getAttribute("data-recepie-id");
   const fullRecepie = document.querySelector("#fullRecepieSection");
   getFullRecepie(recepieID);
-
   fullRecepie.scrollIntoView();
+  body.classList.remove("no-scroll");
 };
 
 const displayError = (msg) => {
-  const confirmation = document.querySelector(".esultsSection__confirmation");
+  const confirmation = document.querySelector(".resultsSection__confirmation");
   confirmation.textContent = msg;
 };
 
@@ -115,7 +115,7 @@ const createRecepieObj = (obj) => {
     name: obj.strMeal,
     category: obj.strCategory,
     area: obj.strArea,
-    tag: obj.strTags ? obj.strTags : "",
+    // tag: obj.strTags ? obj.strTags : "",
     image: obj.strMealThumb,
     instruction: obj.strInstructions,
     ingredient: [],
@@ -129,7 +129,7 @@ const createRecepieObj = (obj) => {
     if (obj.hasOwnProperty(key)) {
       if (regexpMeasure.test(key)) {
         recepieObj.measure.push(obj[key]);
-        if (obj[key] === "" || obj[key] === " ") {
+        if (obj[key] == "" || obj[key] === " ") {
           recepieObj.measure.pop(obj[key]);
           break;
         }
@@ -140,7 +140,7 @@ const createRecepieObj = (obj) => {
     if (obj.hasOwnProperty(key)) {
       if (regexpIngredient.test(key)) {
         recepieObj.ingredient.push(obj[key]);
-        if (obj[key] === "" || obj[key] === " ") {
+        if (obj[key] === "" || obj[key] === " " || obj[key] === null) {
           recepieObj.ingredient.pop(obj[key]);
           break;
         }
@@ -150,9 +150,6 @@ const createRecepieObj = (obj) => {
   return recepieObj;
 };
 const createRecepie = (obj) => {
-  const recepieContainer = document.querySelector(
-    "#fullRecepieSection__content"
-  );
   console.log(obj);
   recepieContainer.innerHTML = "";
   let recepie = `
@@ -161,7 +158,6 @@ const createRecepie = (obj) => {
     <div class="recepie__tags">
       <p class="info">${obj.category}</p>
       <p class="info">${obj.area}</p>
-      <p class="info">${obj.tag}</p>
     </div>
     <div class="recepie__ingredients">
       <h3 class="title">Ingredients</h3>

@@ -5,13 +5,9 @@ const recepieContainer = document.querySelector("#fullRecepieSection__content");
 const fullRecepiePage = document.querySelector("#fullRecepieSection");
 const appInit = () => {
   setApp();
-  const likedRecepies = document.querySelector("#likedBtn");
-  likedRecepies.addEventListener("click", () => {
-    fullRecepiePage.scrollIntoView();
-  });
+
   const backBtn = document.querySelector("#back");
   backBtn.addEventListener("click", () => {
-    // body.scrollIntoView();
     fullRecepiePage.classList.add("fullRecepieSection--none");
     body.classList.add("no-scroll");
     main.classList.remove("none");
@@ -73,7 +69,7 @@ const displayRecepies = async (url, conteiner) => {
     console.log(meals);
     for (let i = 0; i < meals.length; i++) {
       let recepie = `
-      <div class="recepie" data-recepie-id="${meals[i].idMeal}">
+      <div class="recepie" data-id="${meals[i].idMeal}">
         <img class="recepie__img" src=${meals[i].strMealThumb} alt=${meals[i].strMeal}>
         <div class="recepie__text">
           <h2 class="recepie__name">${meals[i].strMeal}</h2>
@@ -91,12 +87,9 @@ const displayRecepies = async (url, conteiner) => {
 };
 
 const showFullRecepie = (e) => {
-  const recepieID = e.path[1].getAttribute("data-recepie-id");
-  // const fullRecepie = document.querySelector("#fullRecepieSection");
+  const recepieID = e.path[1].dataset.id;
   getFullRecepie(recepieID);
   fullRecepiePage.classList.remove("fullRecepieSection--none");
-  // fullRecepie.scrollIntoView();
-  // body.style.overflowX = "hidden";
   main.classList.add("none");
   body.classList.remove("no-scroll");
 };

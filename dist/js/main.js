@@ -2,17 +2,19 @@ let API = "https://www.themealdb.com/api/json/v1/1/";
 const body = document.querySelector("body");
 const main = document.querySelector("main");
 const recepieContainer = document.querySelector("#fullRecepieSection__content");
+const fullRecepiePage = document.querySelector("#fullRecepieSection");
 const appInit = () => {
   setApp();
   const likedRecepies = document.querySelector("#likedBtn");
   likedRecepies.addEventListener("click", () => {
-    const fullRecepiePage = document.querySelector("#fullRecepieSection");
     fullRecepiePage.scrollIntoView();
   });
   const backBtn = document.querySelector("#back");
   backBtn.addEventListener("click", () => {
-    body.scrollIntoView();
+    // body.scrollIntoView();
+    fullRecepiePage.classList.add("fullRecepieSection--none");
     body.classList.add("no-scroll");
+    main.classList.remove("none");
   });
 };
 const setApp = () => {
@@ -21,6 +23,7 @@ const setApp = () => {
   setCategories(typeSubcategoryCon, "list.php?c=list");
   setCategories(areaSubcategoryCon, "list.php?a=list");
   body.classList.add("no-scroll");
+  main.classList.remove("none");
 };
 const setCategories = async (container, target) => {
   try {
@@ -89,10 +92,12 @@ const displayRecepies = async (url, conteiner) => {
 
 const showFullRecepie = (e) => {
   const recepieID = e.path[1].getAttribute("data-recepie-id");
-  const fullRecepie = document.querySelector("#fullRecepieSection");
+  // const fullRecepie = document.querySelector("#fullRecepieSection");
   getFullRecepie(recepieID);
-  fullRecepie.scrollIntoView();
-  body.style.overflowX = "hidden";
+  fullRecepiePage.classList.remove("fullRecepieSection--none");
+  // fullRecepie.scrollIntoView();
+  // body.style.overflowX = "hidden";
+  main.classList.add("none");
   body.classList.remove("no-scroll");
 };
 

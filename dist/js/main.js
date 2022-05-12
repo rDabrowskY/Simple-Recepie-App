@@ -1,5 +1,6 @@
 let API = "https://www.themealdb.com/api/json/v1/1/";
 const body = document.querySelector("body");
+const main = document.querySelector("main");
 const recepieContainer = document.querySelector("#fullRecepieSection__content");
 const appInit = () => {
   setApp();
@@ -10,8 +11,8 @@ const appInit = () => {
   });
   const backBtn = document.querySelector("#back");
   backBtn.addEventListener("click", () => {
-    body.classList.add("no-scroll");
     body.scrollIntoView();
+    body.classList.add("no-scroll");
   });
 };
 const setApp = () => {
@@ -91,6 +92,7 @@ const showFullRecepie = (e) => {
   const fullRecepie = document.querySelector("#fullRecepieSection");
   getFullRecepie(recepieID);
   fullRecepie.scrollIntoView();
+  body.style.overflowX = "hidden";
   body.classList.remove("no-scroll");
 };
 

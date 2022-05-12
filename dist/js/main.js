@@ -3,15 +3,20 @@ const body = document.querySelector("body");
 const main = document.querySelector("main");
 const recepieContainer = document.querySelector("#fullRecepieSection__content");
 const fullRecepiePage = document.querySelector("#fullRecepieSection");
+const backBtn = document.querySelector("#back");
+const likeBtn = document.querySelector("#likeRecepie");
+const likedRecepeiesBtn = document.querySelector("#likedBtn");
+const confirmation = document.querySelector(".resultsSection__confirmation");
+const recepiesContainer = document.querySelector("#resultsSection__content");
 const appInit = () => {
   setApp();
-
-  const backBtn = document.querySelector("#back");
   backBtn.addEventListener("click", () => {
     fullRecepiePage.classList.add("fullRecepieSection--none");
     body.classList.add("no-scroll");
     main.classList.remove("none");
   });
+  likeBtn.addEventListener("click", likeRecepie);
+  likedRecepeiesBtn.addEventListener("click", displayLikedRecepies());
 };
 const setApp = () => {
   const typeSubcategoryCon = document.querySelector("#categorySubmenu__type");
@@ -48,25 +53,26 @@ const setCategories = async (container, target) => {
   }
 };
 const getRecepiesFromCategories = async (e, category) => {
-  let url;
-  const recepiesContainer = document.querySelector("#resultsSection__content");
+  let flag;
+
   if (e.path[1].id === "categorySubmenu__type") {
-    url = `${API}filter.php?c=${category}`;
-    displayRecepies(url, recepiesContainer);
+    flag = "c";
+    displayRecepies(flag, category);
   } else {
-    url = `${API}filter.php?a=${category}`;
-    displayRecepies(url, recepiesContainer);
+    flag = "a";
+    displayRecepies(flag, category);
   }
 };
-const displayRecepies = async (url, conteiner) => {
+const displayRecepies = async (flag, category) => {
   const resultCount = document.querySelector(".resultsSection__amount");
   resultCount.textContent = "Results:";
-  conteiner.innerHTML = "";
+
+  recepiesContainer.innerHTML = "";
+  // console.log(url);
   try {
-    const res = await fetch(url);
+    const res = await fetch(`${API}filter.php?${flag}=${category}`);
     const data = await res.json();
     const meals = data.meals;
-    console.log(meals);
     for (let i = 0; i < meals.length; i++) {
       let recepie = `
       <div class="recepie" data-id="${meals[i].idMeal}">
@@ -76,7 +82,7 @@ const displayRecepies = async (url, conteiner) => {
         </div>
         <button class="recepie__btn primary-btn">Let's cook!</button>
       </div>`;
-      conteiner.innerHTML += recepie;
+      recepiesContainer.innerHTML += recepie;
     }
     resultCount.textContent = `Results: ${meals.length}`;
   } catch (err) {
@@ -95,7 +101,6 @@ const showFullRecepie = (e) => {
 };
 
 const displayError = (msg) => {
-  const confirmation = document.querySelector(".resultsSection__confirmation");
   confirmation.textContent = msg;
 };
 
@@ -112,6 +117,7 @@ const getFullRecepie = async (id) => {
 };
 const createRecepieObj = (obj) => {
   let recepieObj = {
+    id: obj.idMeal,
     name: obj.strMeal,
     category: obj.strCategory,
     area: obj.strArea,
@@ -150,7 +156,6 @@ const createRecepieObj = (obj) => {
   return recepieObj;
 };
 const createRecepie = (obj) => {
-  console.log(obj);
   recepieContainer.innerHTML = "";
   let recepie = `
     <img class="recepie__image" src=${obj.image} alt=${obj.name}>
@@ -169,6 +174,7 @@ const createRecepie = (obj) => {
     </div>
     <p class="enjoy">Enjoy!</p>`;
   recepieContainer.innerHTML += recepie;
+  likeBtn.dataset.id = obj.id;
   console.log(recepieContainer);
 };
 const createIngredientsList = (objIng, objMeas) => {
@@ -183,5 +189,23 @@ const createIngredientsList = (objIng, objMeas) => {
     list.innerHTML += item;
   }
   return list.outerHTML;
+};
+const likeRecepie = (e) => {
+  const recepieId = likeBtn.dataset.id;
+  let recepies;
+  if (localStorage.getItem("recepies") === null) {
+    recepies = [];
+  } else {
+    recepies = JSON.parse(localStorage.getItem("recepies"));
+  }
+  recepies.push(recepieId);
+  let filtered = [...new Set(recepies)];
+  console.log(filtered);
+  localStorage.setItem("recepies", JSON.stringify(filtered));
+};
+const displayLikedRecepies = () => {
+  if (!localStorage.getItem("recepies")) {
+    displayError("There is no liked recepies :(");
+  }
 };
 document.addEventListener("DOMContentLoaded", appInit);

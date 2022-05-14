@@ -7,7 +7,8 @@
   <title>Simple Recepie App</title>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
-  <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
   
   <link rel="stylesheet" href="./css/style.min.css">
   <script src="./js/main.js" type="text/javascript" defer></script>
@@ -17,46 +18,45 @@
   <main id="main">
     <header id="appHeader" class="appHeader">
       <button id="appHeader__profile" class="appHeader__btn icon-btn">
-        <span class="iconify" data-icon="akar-icons:person"></span>
+        <i class="fa-regular fa-user"></i>
       </button>
       <h1 class="appHeader__title">Simple Recipe App</h1>
-      <button id="appHeader__settings" class="appHeader__btn icon-btn">
-        <span class="iconify" data-icon="octicon:gear-24"></span>
+      <button id="appHeader__settings" class="appHeader__btn icon-btn" title="Settings">
+        <i class="fa-solid fa-gear"></i>
       </button>
     </header>
     <nav id="navSection" class="navSection">
       <div class="formContainer">
         <form class="formContainer__form" class="formSection__form">
           <input type="text" id="formContainer__text" class="formContainer__text" placeholder="Search for recepie" title="Search For Recepie" autocomplete="off">
-          <li id="formContainer__button" class="formContainer__button icon-btn">
-            <span class="iconify" data-icon="mdi:magnify"></span>
-          </li>
+          <button type="submit" id="formContainer__button" class="formContainer__button icon-btn">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
         </form>
       </div> 
       <div class="categoriesContainer">
         <ul class="categoriesContainer__list">
             <li class="has-submenu">
-              <button id="categoriesBtn" data-category="categories" class="categoryContainer__button icon-btn">
-                <span class="iconify" data-icon="bx:category"></span>
+              <button id="categoriesBtn" class="categoryContainer__button icon-btn" title="Recepie by Category">
+                <i class="fa-solid fa-chart-bar"></i>
               </button>
               <div id="categorySubmenu__type" class="categorySubmenu"></div>
             </li> 
             <li class="has-submenu">
-              <button id="areaBtn" class="categoryContainer__button icon-btn">
-                <span class="iconify" data-icon="gis:world-map"></span>
+              <button id="areaBtn" class="categoryContainer__button icon-btn" title="Recepie by Area">
+                <i class="fa-solid fa-map"></i>
               </button>
               <div id="categorySubmenu__area" class="categorySubmenu"></div>   
             </li>
             <li> 
-              <button id="likedBtn" data-btn-category="liked" class="categoryContainer__button icon-btn">
-                <span class="iconify" data-icon="fa6-solid:heart"></span>
+              <button id="likedBtn" class="categoryContainer__button icon-btn" title="Show Liked Recepies">
+                <i class="fa-solid fa-heart"></i>
               </button>
             </li>
             <li>
-              <button id="randomBtn" data-btn-category="random" class="categoryContainer__button icon-btn">
-                <span class="iconify" data-icon="fad:random-1dice"></span>
+              <button id="randomBtn" class="categoryContainer__button icon-btn" title="Random Recepie">
+                <i class="fa-solid fa-dice"></i>
               </button>
-            </li>
         </ul>
       </div>
     </nav>
@@ -68,16 +68,14 @@
   </main>
   <section id="fullRecepieSection" class="fullRecepieSection fullRecepieSection--none">
     <header class="fullRecepieSection__header">
-      <button id="back" class="icon-btn">
-          <span class="iconify" data-icon="akar-icons:arrow-left"></span> 
+      <button id="back" class="icon-btn" title="Back To App">
+        <i class="fa-solid fa-arrow-left"></i>
       </button>
-      <button id="likeRecepie" class="icon-btn">
-        <span class="iconify" data-icon="bi:heart"></span>
+      <button id="likeRecepie" class="likeRecepie icon-btn" title="Like Recepie">
+        <i class="fa-regular fa-heart"></i>
       </button>
     </header>
-    <div id="fullRecepieSection__content" class="fullRecepieSection__content">
-      
-    </div>
+    <div id="fullRecepieSection__content" class="fullRecepieSection__content"></div>
   </section>
 </body>
 </html>

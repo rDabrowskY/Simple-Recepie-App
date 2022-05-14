@@ -8,6 +8,7 @@ const likeBtn = document.querySelector("#likeRecepie");
 const likedRecepeiesBtn = document.querySelector("#likedBtn");
 const confirmation = document.querySelector(".resultsSection__confirmation");
 const recepiesContainer = document.querySelector("#resultsSection__content");
+const resultCount = document.querySelector(".resultsSection__amount");
 const appInit = () => {
   setApp();
   backBtn.addEventListener("click", () => {
@@ -16,13 +17,15 @@ const appInit = () => {
     main.classList.remove("none");
   });
   likeBtn.addEventListener("click", likeRecepie);
-  likedRecepeiesBtn.addEventListener("click", displayLikedRecepies());
+  likedRecepeiesBtn.addEventListener("click", displayLikedRecepies);
 };
 const setApp = () => {
   const typeSubcategoryCon = document.querySelector("#categorySubmenu__type");
   const areaSubcategoryCon = document.querySelector("#categorySubmenu__area");
+
   setCategories(typeSubcategoryCon, "list.php?c=list");
   setCategories(areaSubcategoryCon, "list.php?a=list");
+
   body.classList.add("no-scroll");
   main.classList.remove("none");
 };
@@ -46,10 +49,8 @@ const setCategories = async (container, target) => {
       });
       container.appendChild(div);
     }
-    console.log(data);
   } catch (err) {
     displayError(err);
-    console.log(err);
   }
 };
 const getRecepiesFromCategories = async (e, category) => {
@@ -64,7 +65,6 @@ const getRecepiesFromCategories = async (e, category) => {
   }
 };
 const displayRecepies = async (flag, category) => {
-  const resultCount = document.querySelector(".resultsSection__amount");
   resultCount.textContent = "Results:";
 
   recepiesContainer.innerHTML = "";
@@ -121,7 +121,6 @@ const createRecepieObj = (obj) => {
     name: obj.strMeal,
     category: obj.strCategory,
     area: obj.strArea,
-    // tag: obj.strTags ? obj.strTags : "",
     image: obj.strMealThumb,
     instruction: obj.strInstructions,
     ingredient: [],
@@ -175,7 +174,8 @@ const createRecepie = (obj) => {
     <p class="enjoy">Enjoy!</p>`;
   recepieContainer.innerHTML += recepie;
   likeBtn.dataset.id = obj.id;
-  console.log(recepieContainer);
+  setLikeBtn(likeBtn);
+  // console.log(recepieContainer);
 };
 const createIngredientsList = (objIng, objMeas) => {
   const list = document.createElement("ul");
@@ -191,21 +191,79 @@ const createIngredientsList = (objIng, objMeas) => {
   return list.outerHTML;
 };
 const likeRecepie = (e) => {
-  const recepieId = likeBtn.dataset.id;
-  let recepies;
-  if (localStorage.getItem("recepies") === null) {
-    recepies = [];
+  const btnID = likeBtn.dataset.id;
+  if (likeBtn.classList.contains("likeRecepie--active")) {
+    removeRecepieLS(btnID);
+    likeBtn.classList.remove("likeRecepie--active");
   } else {
-    recepies = JSON.parse(localStorage.getItem("recepies"));
+    addRecepieLS(btnID);
+    likeBtn.classList.add("likeRecepie--active");
   }
-  recepies.push(recepieId);
-  let filtered = [...new Set(recepies)];
-  console.log(filtered);
-  localStorage.setItem("recepies", JSON.stringify(filtered));
+  getRecepieLS();
 };
-const displayLikedRecepies = () => {
-  if (!localStorage.getItem("recepies")) {
-    displayError("There is no liked recepies :(");
+
+const getRecepieLS = () => {
+  const recepies = JSON.parse(localStorage.getItem("recepiesIDs"));
+  console.log(recepies);
+  return recepies === null ? [] : recepies;
+};
+
+const addRecepieLS = (recepieId) => {
+  const recepies = getRecepieLS();
+  localStorage.setItem("recepiesIDs", JSON.stringify([...recepies, recepieId]));
+};
+
+const removeRecepieLS = (recepieId) => {
+  const recepies = getRecepieLS();
+  localStorage.setItem(
+    "recepiesIDs",
+    JSON.stringify(recepies.filter((id) => id !== recepieId))
+  );
+};
+const setLikeBtn = (likeBtn) => {
+  const btnId = likeBtn.dataset.id;
+  const likedRecepies = getRecepieLS();
+  console.log(likedRecepies);
+  if (likedRecepies.length) {
+    for (let key of likedRecepies) {
+      if (key === btnId) {
+        likeBtn.classList.add("likeRecepie--active");
+        return;
+      } else {
+        likeBtn.classList.remove("likeRecepie--active");
+      }
+    }
+  } else {
+    likeBtn.classList.remove("likeRecepie--active");
   }
 };
+const displayLikedRecepies = async () => {
+  const likedRecepies = getRecepieLS();
+  resultCount.textContent = `Results: ${likedRecepies.length}`;
+  recepiesContainer.innerHTML = "";
+  for (let recepieID of likedRecepies) {
+    try {
+      const resp = await fetch(`${API}lookup.php?i=${recepieID}`);
+      const data = await resp.json();
+      const meal = data.meals[0];
+      displayRecepie(meal);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+  const recepieBtn = document.querySelectorAll(".recepie__btn");
+  recepieBtn.forEach((btn) => btn.addEventListener("click", showFullRecepie));
+};
+const displayRecepie = (meal) => {
+  let recepie = `
+      <div class="recepie" data-id="${meal.idMeal}">
+        <img class="recepie__img" src=${meal.strMealThumb} alt=${meal.strMeal}>
+        <div class="recepie__text">
+          <h2 class="recepie__name">${meal.strMeal}</h2>
+        </div>
+        <button class="recepie__btn primary-btn">Let's cook!</button>
+      </div>`;
+  recepiesContainer.innerHTML += recepie;
+};
+
 document.addEventListener("DOMContentLoaded", appInit);

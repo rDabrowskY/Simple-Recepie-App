@@ -19,6 +19,11 @@
     align-items: center;
     justify-content: space-between;
     margin-bottom: 1rem;
+    .likeRecepie{
+      &--active{
+        color:red;
+      }
+    }
   }
   &__content{
     display: flex;

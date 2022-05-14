@@ -305,7 +305,7 @@ const displayRecepiesByName = async (name) => {
     const data = await resp.json();
     const meals = data.meals;
     if (!data.meals) {
-      resultCount.textContent = `No recepies matches :(`;
+      resultCount.textContent = `No recepies matched :(`;
       return;
     }
     for (let i = 0; i < meals.length; i++) {

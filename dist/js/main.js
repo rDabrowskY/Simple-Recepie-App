@@ -1,4 +1,5 @@
-let API = "https://www.themealdb.com/api/json/v1/1/";
+const API = "https://www.themealdb.com/api/json/v1/1/";
+
 const body = document.querySelector("body");
 const main = document.querySelector("main");
 const recepieContainer = document.querySelector("#fullRecepieSection__content");
@@ -9,6 +10,8 @@ const likedRecepeiesBtn = document.querySelector("#likedBtn");
 const confirmation = document.querySelector(".resultsSection__confirmation");
 const recepiesContainer = document.querySelector("#resultsSection__content");
 const resultCount = document.querySelector(".resultsSection__amount");
+const form = document.querySelector("#formContainer__form");
+
 const appInit = () => {
   setApp();
   backBtn.addEventListener("click", () => {
@@ -18,6 +21,7 @@ const appInit = () => {
   });
   likeBtn.addEventListener("click", likeRecepie);
   likedRecepeiesBtn.addEventListener("click", displayLikedRecepies);
+  form.addEventListener("submit", getRecepieByName);
 };
 const setApp = () => {
   const typeSubcategoryCon = document.querySelector("#categorySubmenu__type");
@@ -29,6 +33,9 @@ const setApp = () => {
   body.classList.add("no-scroll");
   main.classList.remove("none");
 };
+
+//Getting and set sublist of categories
+
 const setCategories = async (container, target) => {
   try {
     const res = await fetch(`${API}${target}`);
@@ -50,9 +57,10 @@ const setCategories = async (container, target) => {
       container.appendChild(div);
     }
   } catch (err) {
-    displayError(err);
+    console.error(err);
   }
 };
+
 const getRecepiesFromCategories = async (e, category) => {
   let flag;
 
@@ -64,11 +72,12 @@ const getRecepiesFromCategories = async (e, category) => {
     displayRecepies(flag, category);
   }
 };
+
+//Recepies by category or area
+
 const displayRecepies = async (flag, category) => {
   resultCount.textContent = "Results:";
-
   recepiesContainer.innerHTML = "";
-  // console.log(url);
   try {
     const res = await fetch(`${API}filter.php?${flag}=${category}`);
     const data = await res.json();
@@ -86,11 +95,13 @@ const displayRecepies = async (flag, category) => {
     }
     resultCount.textContent = `Results: ${meals.length}`;
   } catch (err) {
-    console.log(err);
+    console.error(err);
   }
   const recepieBtn = document.querySelectorAll(".recepie__btn");
   recepieBtn.forEach((btn) => btn.addEventListener("click", showFullRecepie));
 };
+
+//Full recepie functions, display all info about recepie
 
 const showFullRecepie = (e) => {
   const recepieID = e.path[1].dataset.id;
@@ -98,10 +109,6 @@ const showFullRecepie = (e) => {
   fullRecepiePage.classList.remove("fullRecepieSection--none");
   main.classList.add("none");
   body.classList.remove("no-scroll");
-};
-
-const displayError = (msg) => {
-  confirmation.textContent = msg;
 };
 
 const getFullRecepie = async (id) => {
@@ -158,10 +165,12 @@ const createRecepie = (obj) => {
   recepieContainer.innerHTML = "";
   let recepie = `
     <img class="recepie__image" src=${obj.image} alt=${obj.name}>
-    <h2 class="recepie__title">${obj.name}</h2>
-    <div class="recepie__tags">
-      <p class="info">${obj.category}</p>
-      <p class="info">${obj.area}</p>
+    <div class="recepie__text">  
+      <h2 class="recepie__title">${obj.name}</h2>
+      <div class="recepie__tags">
+        <p class="info">${obj.category}</p>
+        <p class="info">${obj.area}</p>
+      </div>
     </div>
     <div class="recepie__ingredients">
       <h3 class="title">Ingredients</h3>
@@ -170,13 +179,14 @@ const createRecepie = (obj) => {
     <div class="recepie__description">
       <h3 class="title">Instruction</h3>
       <p class="description">${obj.instruction}</p>
+      <p class="enjoy">Enjoy!</p>
     </div>
-    <p class="enjoy">Enjoy!</p>`;
+    `;
   recepieContainer.innerHTML += recepie;
   likeBtn.dataset.id = obj.id;
   setLikeBtn(likeBtn);
-  // console.log(recepieContainer);
 };
+
 const createIngredientsList = (objIng, objMeas) => {
   const list = document.createElement("ul");
   list.classList.add("ingredients__list");
@@ -190,21 +200,12 @@ const createIngredientsList = (objIng, objMeas) => {
   }
   return list.outerHTML;
 };
-const likeRecepie = (e) => {
-  const btnID = likeBtn.dataset.id;
-  if (likeBtn.classList.contains("likeRecepie--active")) {
-    removeRecepieLS(btnID);
-    likeBtn.classList.remove("likeRecepie--active");
-  } else {
-    addRecepieLS(btnID);
-    likeBtn.classList.add("likeRecepie--active");
-  }
-  getRecepieLS();
-};
+//
+
+//local storage functions
 
 const getRecepieLS = () => {
   const recepies = JSON.parse(localStorage.getItem("recepiesIDs"));
-  console.log(recepies);
   return recepies === null ? [] : recepies;
 };
 
@@ -220,10 +221,22 @@ const removeRecepieLS = (recepieId) => {
     JSON.stringify(recepies.filter((id) => id !== recepieId))
   );
 };
+
+//
+//liked recepies functions
+const likeRecepie = () => {
+  const btnID = likeBtn.dataset.id;
+  if (likeBtn.classList.contains("likeRecepie--active")) {
+    removeRecepieLS(btnID);
+    likeBtn.classList.remove("likeRecepie--active");
+  } else {
+    addRecepieLS(btnID);
+    likeBtn.classList.add("likeRecepie--active");
+  }
+};
 const setLikeBtn = (likeBtn) => {
   const btnId = likeBtn.dataset.id;
   const likedRecepies = getRecepieLS();
-  console.log(likedRecepies);
   if (likedRecepies.length) {
     for (let key of likedRecepies) {
       if (key === btnId) {
@@ -239,21 +252,27 @@ const setLikeBtn = (likeBtn) => {
 };
 const displayLikedRecepies = async () => {
   const likedRecepies = getRecepieLS();
-  resultCount.textContent = `Results: ${likedRecepies.length}`;
   recepiesContainer.innerHTML = "";
-  for (let recepieID of likedRecepies) {
-    try {
-      const resp = await fetch(`${API}lookup.php?i=${recepieID}`);
-      const data = await resp.json();
-      const meal = data.meals[0];
-      displayRecepie(meal);
-    } catch (err) {
-      console.error(err);
+  if (likedRecepies.length) {
+    resultCount.textContent = `You have ${likedRecepies.length} liked recepies :D`;
+
+    for (let recepieID of likedRecepies) {
+      try {
+        const resp = await fetch(`${API}lookup.php?i=${recepieID}`);
+        const data = await resp.json();
+        const meal = data.meals[0];
+        displayRecepie(meal);
+      } catch (err) {
+        console.error(err);
+      }
     }
+    const recepieBtn = document.querySelectorAll(".recepie__btn");
+    recepieBtn.forEach((btn) => btn.addEventListener("click", showFullRecepie));
+  } else {
+    resultCount.textContent = `You don't have any liked recepies :(`;
   }
-  const recepieBtn = document.querySelectorAll(".recepie__btn");
-  recepieBtn.forEach((btn) => btn.addEventListener("click", showFullRecepie));
 };
+
 const displayRecepie = (meal) => {
   let recepie = `
       <div class="recepie" data-id="${meal.idMeal}">
@@ -263,7 +282,57 @@ const displayRecepie = (meal) => {
         </div>
         <button class="recepie__btn primary-btn">Let's cook!</button>
       </div>`;
+
   recepiesContainer.innerHTML += recepie;
 };
+
+//
+
+//form functions to display recepies by name
+
+const getRecepieByName = (e) => {
+  e.preventDefault();
+  const input = document.querySelector("#formContainer__text");
+  recepiesContainer.innerHTML = "";
+  displayRecepiesByName(input.value);
+};
+
+const displayRecepiesByName = async (name) => {
+  let trimedName = trimName(name);
+  const url = encodeURI(`${API}search.php?s=${trimedName}`);
+  try {
+    const resp = await fetch(url);
+    const data = await resp.json();
+    const meals = data.meals;
+    if (!data.meals) {
+      resultCount.textContent = `No recepies matches :(`;
+      return;
+    }
+    for (let i = 0; i < meals.length; i++) {
+      let recepie = `
+      <div class="recepie" data-id="${meals[i].idMeal}">
+        <img class="recepie__img" src=${meals[i].strMealThumb} alt=${meals[i].strMeal}>
+        <div class="recepie__text">
+          <h2 class="recepie__name">${meals[i].strMeal}</h2>
+        </div>
+        <button class="recepie__btn primary-btn">Let's cook!</button>
+      </div>`;
+      recepiesContainer.innerHTML += recepie;
+    }
+    resultCount.textContent = `Results: ${meals.length}`;
+  } catch (err) {
+    console.error(err);
+  }
+  const recepieBtn = document.querySelectorAll(".recepie__btn");
+  recepieBtn.forEach((btn) => btn.addEventListener("click", showFullRecepie));
+};
+
+//Trim text function to prevent double spacebar
+
+const trimName = (string) => {
+  let regex = / {2,}/g;
+  return string.replace(regex, "").trim();
+};
+//
 
 document.addEventListener("DOMContentLoaded", appInit);
